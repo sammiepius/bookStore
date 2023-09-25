@@ -1,30 +1,63 @@
-Celo Marketplace Dapp
+# BookStore
+
+## Description
+This a shoe market place where users can:
+1. Buy and sell book products on the celo Blockchain.
+2. Rate a book. Book seller can not rate his book.
+3. Delete a book. Book can be delete by the book owner only.
+4. View the book details.
+
+## Live Demo
+[AgroCelo](https://sammiepius.github.io/bookStore/)
+
+## Usage
+
+### Requirements
+1. Install the [CeloExtensionWallet](https://chrome.google.com/webstore/detail/celoextensionwallet/kkilomkmpmkbdnfelcpgckmpcaemjcdh?hl=en) from the Google Chrome Store.
+2. Create a wallet.
+3. Go to [https://celo.org/developers/faucet](https://celo.org/developers/faucet) and get tokens for the alfajores testnet.
+4. Switch to the alfajores testnet in the CeloExtensionWallet.
 
 
-Description
-This is a very simple marketplace dapp where users can:
 
-See products hosted on the Celo Blockchain
-Purchase products with cUSD and pay the owner
-Add your own products to the dapp
-Live Demo
-Marketplace Dapp
+## Project Setup
 
-Usage
-Requirements
-Install the CeloExtensionWallet from the Google Chrome Store.
-Create a wallet.
-Go to https://celo.org/developers/faucet and get tokens for the alfajores testnet.
-Switch to the alfajores testnet in the CeloExtensionWallet.
-Test
-Create a product.
-Create a second account in your extension wallet and send them cUSD tokens.
-Buy product with secondary account.
-Check if balance of first account increased.
-Project Setup
-Install
+
+# Install
+
+```
+
 npm install
-Start
+
+```
+
+or
+
+```
+
+yarn install
+
+```
+
+# Start
+
+```
+
 npm run dev
-Build
+
+```
+
+# Build
+
+```
+
 npm run build
+
+```
+# Usage
+1. Install the [CeloExtensionWallet](https://chrome.google.com/webstore/detail/celoextensionwallet/kkilomkmpmkbdnfelcpgckmpcaemjcdh?hl=en) from the google chrome store.
+2. Create a wallet.
+3. Go to [https://celo.org/developers/faucet](https://celo.org/developers/faucet) and get tokens for the alfajores testnet.
+4. Switch to the alfajores testnet in the CeloExtensionWallet."# ceAffairs"
+"# AgroCelo"
+"# AgroCelo1"
