@@ -8,7 +8,7 @@ This a shoe market place where users can:
 4. View the book details.
 
 ## Live Demo
-[AgroCelo](https://sammiepius.github.io/bookStore/)
+[BookStore](https://sammiepius.github.io/bookStore/)
 
 ## Usage
 
