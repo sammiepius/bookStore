@@ -27,14 +27,13 @@ contract Bookstore {
     string location;
     uint price;
     uint sold;
-    uint rating_point;
-    uint rated_by;
+    uint likes;
     }
+
+
 //map used to store books.
     mapping (uint => Book) internal books;
 
-//map used to store book rating.
-    mapping(address => mapping(uint => bool)) private bookRating;
 
 // Function that create a book.
     function writeBook(
@@ -49,6 +48,7 @@ contract Bookstore {
         require(bytes(_description).length > 0, "description field cannot be empty");
         require(_price > 0, " price field must be at least 1 wei");
         uint _sold = 0;
+        uint _likes = 0;
     Book storage newBook = books[productsLength];
        newBook.owner = payable(msg.sender);
        newBook.name = _name;
@@ -57,6 +57,7 @@ contract Bookstore {
        newBook.location = _location;
        newBook.price = _price;
        newBook.sold = _sold;
+       newBook.likes = _likes;
 
         productsLength++;
     }
@@ -68,7 +69,6 @@ contract Bookstore {
         string memory,
         string memory,
         string memory,
-        uint,
         uint,
         uint,
         uint
@@ -83,30 +83,23 @@ contract Bookstore {
             book_.location,
             book_.price,
             book_.sold,
-            book_.rating_point,
-            book_.rated_by
+            book_.likes
         );
     }
 
-// function that allow users to rate a book
-    function rateBook (uint256 _index, uint256 _rate) public {
-        require(!bookRating[msg.sender][_index], "You have already rate this book");
-        require(_rate > 0 && _rate <= 5, "Rate need to be between 1 and 5");
-        require(books[_index].owner != msg.sender, "Sorry you cannot rate your own book");
-        Book storage book_ = books[_index];
-        bookRating[msg.sender][_index] = true;
-        book_.rating_point += _rate;
-        book_.rated_by ++;
-    }
-
-
-    //Function to delete a book by the book owner using the book id . 
+//Function to delete a book by the book owner using the book id . 
     function deleteBookId(uint _index) public {
         require(msg.sender == books[_index].owner, "you are not the owner");
         delete books[_index];
     }
 
+// liking memes and the owner cannot like his/her own meme
+    function likeBook(uint _index) public {
+        require(msg.sender != books[_index].owner, "Owner of books cannot like");
+        books[_index].likes++;
+    }
 
+//Function to buy a book.
     function buyBook(uint _index) public payable {
         require(IERC20Token(cUsdTokenAddress).balanceOf(msg.sender) >= books[_index].price, "Insufficient balance in cUSDT token");
         require(

@@ -44,14 +44,9 @@
 				"internalType": "uint256",
 				"name": "_index",
 				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_rate",
-				"type": "uint256"
 			}
 		],
-		"name": "rateBook",
+		"name": "likeBook",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -90,11 +85,6 @@
 				"internalType": "string",
 				"name": "",
 				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
 			},
 			{
 				"internalType": "uint256",

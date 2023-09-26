@@ -5,7 +5,7 @@ import marketplaceAbi from '../contract/marketplace.abi.json';
 import erc20Abi from '../contract/erc20.abi.json';
 
 const ERC20_DECIMALS = 18;
-const MPContractAddress = '0xEF2464F79e8C4D74bf42f575c3484525069A2Ad2';
+const MPContractAddress = '0xf06261821B5AfB98F5724D1923b21EaD8f049DD8';
 const cUSDContractAddress = '0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1';
 
 let kit;
@@ -67,7 +67,7 @@ const getBooks = async function () {
         location: p[4],
         price: new BigNumber(p[5]),
         sold: p[6],
-        rating: p[7],
+        likes: p[7],
       });
     });
     _products.push(_product);
@@ -92,54 +92,46 @@ function renderBooks() {
   }
 }
 
-// function that create a html template.
 function productTemplate(_book) {
   return `
- <div class="card mb-4">
-      <img class="card-img-top" src="${
-        _book.image
-      }" alt="..." style="height : 150px;">
-      <div class="position-absolute  top-0 end-2 bg-danger mt-4 px-2 py-1 rounded" style="cursor : pointer;">
-        <i class="bi bi-trash-fill deleteBtn" style="color : white;" id="${
-          _book.index
-        }"></i>
-        </div>
-        <div class="position-absolute top-0 end-0 bg-warning mt-4 px-2 py-1 rounded-start">
-          ${_book.sold} Sold
-        </div>
-  <div class="card-body text-left p-3 position-relative">
-        <div class="translate-middle-y position-absolute top-0 end-0"  id="${
-          _book.index
-        }">
-        ${identiconTemplate(_book.owner)}
-        </div>
-        <p class="card-title  fw-bold mt-2 text-uppercase">${_book.name}</p>
-        <p class="mt-2 text-left fs-6">
-           ${new BigNumber(_book.price)
-             .shiftedBy(-ERC20_DECIMALS)
-             .toFixed(2)} cUSD
-        </p>
-        ${
-          _book.rating == 0
-            ? ''
-            : `<b><span class="card-text">Rated: ${_book.rating} / 5</span></b>`
-        }
-        <p class="card-text mt-4">
-        <a  class="btn btn-dark rate rateBtn px-auto" id=${
-          _book.index
-        }>Rate this book</a>
-        </p>
-        
-           <div> 
-           <a class="btn btn-md btn-success viewBook"
-           id="${_book.index}" style="width:100%;">View book Details</a>
-           </div>
-          </div>
-    </div>
-    `;
+  <div class="card mb-4">
+          <img class="card-img-top" src="${
+            _book.image
+          }" alt="..." style="height : 200px;">
+           <div class="position-absolute  top-0 end-2 bg-danger mt-4 px-2 py-1 rounded" style="cursor : pointer;">
+             <i class="bi bi-trash-fill deleteBtn" style="color : white;" id="${
+               _book.index
+             }"></i>
+             </div>
+             <div class="position-absolute top-0 end-0 bg-warning mt-4 px-2 py-1 rounded-start">
+               ${_book.sold} Sold
+             </div>
+       <div class="card-body text-left p-3 position-relative">
+             <div class="translate-middle-y position-absolute top-0 end-0"  id="${
+               _book.index
+             }">
+             ${identiconTemplate(_book.owner)}
+             </div>
+             <p class="card-title  fw-bold mt-2 text-uppercase">${
+               _book.name
+             }</p>
+             <i class="bi bi-heart-fill like" style="color : red ; cursor : pointer; font-size: 20px; " id="${
+               _book.index
+             }"> ${
+    _book.likes == 0
+      ? ''
+      : `<b><span class="card-text">${_book.likes}</span></b>`
+  }
+             </i></br>
+              <a class="btn btn-md btn-success viewBook" id="${
+                _book.index
+              }" style="width:100%;">View book Details</a>
+             </div>
+         </div>
+  `;
 }
 
-
+// function that create a html template.
 function identiconTemplate(_address) {
   const icon = blockies
     .create({
@@ -158,7 +150,6 @@ function identiconTemplate(_address) {
     </div>
     `;
 }
-
 
 // create a notification bar
 function notification(_text) {
@@ -183,7 +174,6 @@ window.addEventListener('load', async () => {
 document
   .querySelector('#newProductBtn')
   .addEventListener('click', async (e) => {
-
     // collecting form parameters
     const params = [
       document.getElementById('newProductName').value,
@@ -206,31 +196,7 @@ document
     getBooks();
   });
 
-
 document.querySelector('#marketplace').addEventListener('click', async (e) => {
-
-  if (e.target.className.includes('rateBtn')) {
-    const index = e.target.id;
-    let _rate = prompt('Rate (1-5): ', "");
-    if (Number(_rate) > 5) {
-      _rate = '4';
-    } else if (Number(_rate) < 0) {
-      _rate = '1';
-    }
-    notification(`⌛ rating   "${books[index].name}"...`);
-    try {
-      const result = await contract.methods
-        .rateBook(index, _rate)
-        .send({ from: kit.defaultAccount });
-      notification(`Thank you for rating`);
-      getBooks();
-      getBalance();
-    } catch (error) {
-      notification(`⚠️ ${error}.`);
-      notificationOff()
-    }
-  }
-
   //checks if there is a class name called deleteBtn
   if (e.target.className.includes('deleteBtn')) {
     const index = e.target.id;
@@ -246,6 +212,23 @@ document.querySelector('#marketplace').addEventListener('click', async (e) => {
       getBalance();
     } catch (error) {
       notification(`⚠️ you are not the owner of this event`);
+    }
+    notificationOff();
+  }
+  if (e.target.className.includes('like')) {
+    const index = e.target.id;
+
+    notification('⌛ Please wait...');
+    // calls the likes fucntion on the smart contract
+    try {
+      const result = await contract.methods
+        .likeBook(index)
+        .send({ from: kit.defaultAccount });
+      notification(`thanks`);
+      getBooks();
+      getBalance();
+    } catch (error) {
+      notification(`⚠️ ${error}.`);
     }
     notificationOff();
   }
@@ -305,15 +288,13 @@ alt="image pic" style={{width: "100%", objectFit: "cover"}} />
   <p  style="font-size : 12px;">
     <span style="display : block;" class="text-uppercase fw-bold">Description: </span>
     <span class="">${books[3]}</span>
-  </p>
-
-
-      <p class="card-text mt-2" style="font-size : 12px;">
+   </p>
+   <p class="card-text mt-2" style="font-size : 12px;">
         <span style="display : block;" class="text-uppercase fw-bold">Location: </span>
         <span >${books[4]}</span>
-      </p>
+   </p>
 
-      <div class="d-grid gap-2">
+<div class="d-grid gap-2">
         <a class="btn btn-lg text-white bg-success buyBtn fs-6 p-3"
         id=${_id}
         >
@@ -321,7 +302,7 @@ alt="image pic" style={{width: "100%", objectFit: "cover"}} />
             .shiftedBy(-ERC20_DECIMALS)
             .toFixed(2)} cUSD
         </a>
-      </div>
+  </div>
 </div>
 </div>
 
@@ -332,4 +313,3 @@ alt="image pic" style={{width: "100%", objectFit: "cover"}} />
     notificationOff();
   }
 });
-
