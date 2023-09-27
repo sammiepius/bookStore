@@ -1,13 +1,13 @@
 # BookStore
 
 ## Description
-This a shoe market place where users can:
+This a book market place where users can:
 1. Buy and sell book products on the celo Blockchain.
-2. Rate a book. Book seller can not rate his book.
-3. Delete a book. Book can be delete by the book owner only.
-4. View the book details.
+2. Like a book.The number of likes on a particular book makes it easier for a buyer to purchase the book..it's like a recommendation.
+3. Delete a book. Book can only be deleted by the book owner.
+4. View book details.
 
-## Live Demo
+##Click the link below to see live Demo
 [BookStore](https://sammiepius.github.io/bookStore/)
 
 ## Usage
