@@ -174,6 +174,24 @@ window.addEventListener('load', async () => {
 document
   .querySelector('#newProductBtn')
   .addEventListener('click', async (e) => {
+    const newProductName = document.getElementById("newProductName");
+    const newImgUrl = document.getElementById("newImgUrl");
+    const newPrice = document.getElementById("newPrice");
+
+    document.getElementById("newProductBtn").addEventListener("click", function () {
+      // Validate the price as a valid number
+      const price = parseFloat(newPrice.value);
+      if (isNaN(price) || price <= 0) {
+        alert("Please enter a valid positive number for the price.");
+        return;
+      }
+
+      // Validate the image URL format
+      const imageUrlRegex = /\.(jpeg|jpg|gif|png|bmp)$/i;
+      if (!imageUrlRegex.test(newImgUrl.value)) {
+        alert("Please enter a valid image URL.");
+        return;
+      }
     // collecting form parameters
     const params = [
       document.getElementById('newProductName').value,
