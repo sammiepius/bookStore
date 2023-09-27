@@ -7,7 +7,7 @@ This a book market place where users can:
 3. Delete a book. Book can only be deleted by the book owner.
 4. View book details.
 
-##Click the link below to see live Demo
+## Click the link below to see live Demo
 [BookStore](https://sammiepius.github.io/bookStore/)
 
 ## Usage
