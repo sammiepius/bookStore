@@ -5,7 +5,7 @@ import marketplaceAbi from '../contract/marketplace.abi.json';
 import erc20Abi from '../contract/erc20.abi.json';
 
 const ERC20_DECIMALS = 18;
-const MPContractAddress = '0xf06261821B5AfB98F5724D1923b21EaD8f049DD8';
+const MPContractAddress = '0x7dC72F4b4fcAF4DE2999bEe707500697E7fBD19d';
 const cUSDContractAddress = '0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1';
 
 let kit;
@@ -130,7 +130,6 @@ function productTemplate(_book) {
          </div>
   `;
 }
-
 // function that create a html template.
 function identiconTemplate(_address) {
   const icon = blockies
@@ -178,7 +177,7 @@ document
     const newImgUrl = document.getElementById("newImgUrl");
     const newPrice = document.getElementById("newPrice");
 
-    document.getElementById("newProductBtn").addEventListener("click", function () {
+  //   document.getElementById("newProductBtn").addEventListener("click", function () {
       // Validate the price as a valid number
       const price = parseFloat(newPrice.value);
       if (isNaN(price) || price <= 0) {
@@ -250,8 +249,7 @@ document.querySelector('#marketplace').addEventListener('click', async (e) => {
     }
     notificationOff();
   }
-});
-
+})
 document.querySelector('#addModal1').addEventListener('click', async (e) => {
   if (e.target.className.includes('buyBtn')) {
     const index = e.target.id;
