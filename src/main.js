@@ -177,7 +177,6 @@ document
     const newImgUrl = document.getElementById("newImgUrl");
     const newPrice = document.getElementById("newPrice");
 
-  //   document.getElementById("newProductBtn").addEventListener("click", function () {
       // Validate the price as a valid number
       const price = parseFloat(newPrice.value);
       if (isNaN(price) || price <= 0) {
@@ -295,22 +294,20 @@ document.querySelector('#marketplace').addEventListener('click', async (e) => {
 
       // shows book details on a modal
       document.getElementById('modalHeader').innerHTML = `
-<div class="card">
-<img class="card-img-top"
-src="${books[2]}"
-alt="image pic" style={{width: "100%", objectFit: "cover"}} />
-<div class="card-body">
-  <p class="card-title fs-6 fw-bold mt-2 text-uppercase">${books[1]}</p>
-  <p  style="font-size : 12px;">
+    <div class="card">
+      <img class="card-img-top" src="${books[2]}" alt="image pic" style={{width: "100%", objectFit: "cover"}} />
+      <div class="card-body">
+   <p  class="card-title fs-6 fw-bold mt-2 text-uppercase">${books[1]}</p>
+   <p  style="font-size : 12px;">
     <span style="display : block;" class="text-uppercase fw-bold">Description: </span>
     <span class="">${books[3]}</span>
-   </p>
-   <p class="card-text mt-2" style="font-size : 12px;">
+    </p>
+    <p class="card-text mt-2" style="font-size : 12px;">
         <span style="display : block;" class="text-uppercase fw-bold">Location: </span>
         <span >${books[4]}</span>
    </p>
 
-<div class="d-grid gap-2">
+      <div class="d-grid gap-2">
         <a class="btn btn-lg text-white bg-success buyBtn fs-6 p-3"
         id=${_id}
         >
@@ -319,7 +316,7 @@ alt="image pic" style={{width: "100%", objectFit: "cover"}} />
             .toFixed(2)} cUSD
         </a>
   </div>
-</div>
+ </div>
 </div>
 
 `;
