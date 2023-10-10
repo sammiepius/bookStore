@@ -24,9 +24,9 @@ contract Bookstore {
     uint internal productsLength = 0;
     
     /**
-    * @dev The Ethereum address of the cUSDT (or equivalent) token contract used for book purchases.
+    * @dev The Ethereum address of the cUSD (or equivalent) token contract used for book purchases.
     *      This address is used to interact with the token contract for transferring funds during book purchases.
-    *      Make sure this address is set correctly to the cUSDT token contract deployed on the Ethereum network.
+    *      Make sure this address is set correctly to the cUSD token contract deployed on the Ethereum network.
     */
     address internal cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1; 
 
@@ -220,7 +220,7 @@ contract Bookstore {
      */
     function buyBook(uint _index) public payable {
         require(_index < productsLength, "Invalid book index");
-        require(IERC20Token(cUsdTokenAddress).balanceOf(msg.sender) >= books[_index].price, "Insufficient balance in cUSDT token");
+        require(IERC20Token(cUsdTokenAddress).balanceOf(msg.sender) >= books[_index].price, "Insufficient balance in cUSD token");
         require(
              IERC20Token(cUsdTokenAddress).transferFrom(
             msg.sender,
