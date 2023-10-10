@@ -215,7 +215,8 @@ contract Bookstore {
      */
     function buyBook(uint _index) public payable {
         require(_index < productsLength, "Invalid book index");
-        require(IERC20Token(cUsdTokenAddress).balanceOf(msg.sender) >= books[_index].price, "Insufficient balance in cUSDT token");
+        require(msg.sender != books[_index].owner, "You cannot buy your own book");
+        require(IERC20Token(cUsdTokenAddress).balanceOf(msg.sender) >= books[_index].price, "Insufficient balance in cUSD token");
         require(
              IERC20Token(cUsdTokenAddress).transferFrom(
             msg.sender,
@@ -234,6 +235,7 @@ contract Bookstore {
 
         books[_index].sold++;
     }
+
 
 /**
      * @dev Retrieves the total number of books in the bookstore.

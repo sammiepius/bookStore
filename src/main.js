@@ -5,7 +5,7 @@ import marketplaceAbi from '../contract/marketplace.abi.json';
 import erc20Abi from '../contract/erc20.abi.json';
 
 const ERC20_DECIMALS = 18;
-const MPContractAddress = '0xF02E78DbC6fe529Fc47151E83647eAAB0380144D';
+const MPContractAddress = '0x37030cB6F4fe73B201e8bEAbc7372ABAC6adeb27';
 const cUSDContractAddress = '0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1';
 
 let kit;
@@ -173,23 +173,23 @@ window.addEventListener('load', async () => {
 document
   .querySelector('#newProductBtn')
   .addEventListener('click', async (e) => {
-    const newProductName = document.getElementById("newProductName");
-    const newImgUrl = document.getElementById("newImgUrl");
-    const newPrice = document.getElementById("newPrice");
+    const newProductName = document.getElementById('newProductName');
+    const newImgUrl = document.getElementById('newImgUrl');
+    const newPrice = document.getElementById('newPrice');
 
-      // Validate the price as a valid number
-      const price = parseFloat(newPrice.value);
-      if (isNaN(price) || price <= 0) {
-        alert("Please enter a valid positive number for the price.");
-        return;
-      }
+    // Validate the price as a valid number
+    const price = parseFloat(newPrice.value);
+    if (isNaN(price) || price <= 0) {
+      alert('Please enter a valid positive number for the price.');
+      return;
+    }
 
-      // Validate the image URL format
-      const imageUrlRegex = /\.(jpeg|jpg|gif|png|bmp)$/i;
-      if (!imageUrlRegex.test(newImgUrl.value)) {
-        alert("Please enter a valid image URL.");
-        return;
-      }
+    // Validate the image URL format
+    const imageUrlRegex = /\.(jpeg|jpg|gif|png|bmp)$/i;
+    if (!imageUrlRegex.test(newImgUrl.value)) {
+      alert('Please enter a valid image URL.');
+      return;
+    }
     // collecting form parameters
     const params = [
       document.getElementById('newProductName').value,
@@ -248,38 +248,7 @@ document.querySelector('#marketplace').addEventListener('click', async (e) => {
     }
     notificationOff();
   }
-})
-document.querySelector('#addModal1').addEventListener('click', async (e) => {
-  if (e.target.className.includes('buyBtn')) {
-    const index = e.target.id;
-    notification('⌛ Waiting for payment approval...');
 
-    try {
-      await approve(books[index].price);
-    } catch (error) {
-      notification(`⚠️ ${error}.`);
-    }
-
-    notification(`⌛ Awaiting payment for "${books[index].name}"...`);
-
-    // calls the buy fucntion on the smart contract
-    try {
-      const result = await contract.methods
-        .buyBook(index)
-        .send({ from: kit.defaultAccount });
-      notification(`🎉 You successfully bought "${books[index].name}".`);
-      getBooks();
-      getBalance();
-    } catch (error) {
-      notification(`⚠️ ${error}.`);
-    }
-
-    notificationOff();
-  }
-});
-
-// implements various functionalities
-document.querySelector('#marketplace').addEventListener('click', async (e) => {
   if (e.target.className.includes('viewBook')) {
     const _id = e.target.id;
     let books;
@@ -295,7 +264,9 @@ document.querySelector('#marketplace').addEventListener('click', async (e) => {
       // shows book details on a modal
       document.getElementById('modalHeader').innerHTML = `
     <div class="card">
-      <img class="card-img-top" src="${books[2]}" alt="image pic" style={{width: "100%", objectFit: "cover"}} />
+      <img class="card-img-top" src="${
+        books[2]
+      }" alt="image pic" style={{width: "100%", objectFit: "cover"}} />
       <div class="card-body">
    <p  class="card-title fs-6 fw-bold mt-2 text-uppercase">${books[1]}</p>
    <p  style="font-size : 12px;">
@@ -326,3 +297,32 @@ document.querySelector('#marketplace').addEventListener('click', async (e) => {
     notificationOff();
   }
 });
+document.querySelector('#addModal1').addEventListener('click', async (e) => {
+  if (e.target.className.includes('buyBtn')) {
+    const index = e.target.id;
+    notification('⌛ Waiting for payment approval...');
+
+    try {
+      await approve(books[index].price);
+    } catch (error) {
+      notification(`⚠️ ${error}.`);
+    }
+
+    notification(`⌛ Awaiting payment for "${books[index].name}"...`);
+
+    // calls the buy fucntion on the smart contract
+    try {
+      const result = await contract.methods
+        .buyBook(index)
+        .send({ from: kit.defaultAccount });
+      notification(`🎉 You successfully bought "${books[index].name}".`);
+      getBooks();
+      getBalance();
+    } catch (error) {
+      notification(`⚠️ ${error}.`);
+    }
+
+    notificationOff();
+  }
+});
+
