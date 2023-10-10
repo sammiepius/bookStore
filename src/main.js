@@ -5,7 +5,7 @@ import marketplaceAbi from '../contract/marketplace.abi.json';
 import erc20Abi from '../contract/erc20.abi.json';
 
 const ERC20_DECIMALS = 18;
-const MPContractAddress = '0x7dC72F4b4fcAF4DE2999bEe707500697E7fBD19d';
+const MPContractAddress = '0xF02E78DbC6fe529Fc47151E83647eAAB0380144D';
 const cUSDContractAddress = '0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1';
 
 let kit;
